@@ -1,0 +1,12 @@
+{
+  "version": "2.0",
+  "skills": [
+    {"name": "state_complexity", "databases": ["nh3_storage"], "outputs": ["png", "csv"]},
+    {"name": "state_sequence_lookup", "databases": ["nh3_storage"], "outputs": ["csv"]},
+    {"name": "conductivity_loading", "databases": ["digbat"], "outputs": ["png", "csv"]},
+    {"name": "h2_release_loading", "databases": ["dighyd"], "outputs": ["png", "csv"]},
+    {"name": "dual_axis_cross_database", "databases": ["digbat", "dighyd"], "outputs": ["png", "csv"]},
+    {"name": "mechanism_synthesis", "databases": [], "outputs": ["markdown", "optional_png"]},
+    {"name": "computational_design", "databases": [], "outputs": ["markdown"]}
+  ]
+}

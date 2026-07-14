@@ -1,0 +1,13 @@
+pandas>=2.0
+numpy>=1.24
+matplotlib>=3.7
+openpyxl>=3.1
+pydantic>=2.0
+fastapi>=0.110
+uvicorn>=0.27
+typer>=0.9
+streamlit>=1.30
+chainlit>=2.11,<3
+openai>=1.30
+google-genai>=1.0
+pytest>=8.0

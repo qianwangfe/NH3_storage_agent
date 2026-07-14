@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hydride-nh3-agent"
+version = "0.2.0"
+description = "A tool-gated agent for NH3-storage, conductivity, hydrogen-release, and coordination-mechanism analysis."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "pandas>=2.0",
+  "numpy>=1.24",
+  "matplotlib>=3.7",
+  "openpyxl>=3.1",
+  "pydantic>=2.0",
+  "fastapi>=0.110",
+  "uvicorn>=0.27",
+  "typer>=0.9",
+  "streamlit>=1.30",
+  "chainlit>=2.11,<3",
+  "openai>=1.30",
+  "google-genai>=1.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+hydride-agent = "hydride_agent.cli:app"
+
+[tool.setuptools.packages.find]
+include = ["hydride_agent*"]

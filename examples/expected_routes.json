@@ -1,0 +1,32 @@
+[
+  {
+    "query_id": "state_diversity",
+    "skill": "state_complexity",
+    "databases": ["nh3_storage"]
+  },
+  {
+    "query_id": "libh4_state_sequence",
+    "skill": "state_sequence_lookup",
+    "databases": ["nh3_storage"]
+  },
+  {
+    "query_id": "conductivity_loading",
+    "skill": "conductivity_loading",
+    "databases": ["digbat"]
+  },
+  {
+    "query_id": "h2_release_loading",
+    "skill": "h2_release_loading",
+    "databases": ["dighyd"]
+  },
+  {
+    "query_id": "mechanism_map",
+    "skill": "mechanism_synthesis",
+    "databases": []
+  },
+  {
+    "query_id": "computational_design",
+    "skill": "computational_design",
+    "databases": []
+  }
+]

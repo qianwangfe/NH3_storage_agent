@@ -1,0 +1,19 @@
+{
+  "name": "hydride_nh3_agent",
+  "version": "0.2.0",
+  "description": "Tool-gated analysis of NH3 Storage, DigBat, and DigHyd data.",
+  "frontend_policy": {
+    "raw_database_rows_visible": false,
+    "allowed_outputs": ["public_report", "generated_figure", "exported_csv"]
+  },
+  "databases": ["nh3_storage", "digbat", "dighyd"],
+  "skills": [
+    "state_complexity",
+    "state_sequence_lookup",
+    "conductivity_loading",
+    "h2_release_loading",
+    "dual_axis_cross_database",
+    "mechanism_synthesis",
+    "computational_design"
+  ]
+}
