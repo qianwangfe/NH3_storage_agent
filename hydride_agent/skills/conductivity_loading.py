@@ -14,8 +14,8 @@ from .base import SkillContext, SkillResult
 from .common import choose_column, host_system_base, nh3_per_bh4, pure_parent_or_ammine
 
 DEFAULT_TEMPERATURE_WINDOWS = {
-    "LiBH4": [305.0, 3.0],
-    "Mg(BH4)2": [323.0, 3.0],
+    "LiBH4": [310.0, 3.0],
+    "Mg(BH4)2": [310.0, 3.0],
 }
 
 
