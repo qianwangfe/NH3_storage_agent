@@ -114,8 +114,8 @@ def deterministic_plan(request: str) -> AgentPlan:
                 "show_data_files": True,
                 "systems": ["LiBH4", "Mg(BH4)2"],
                 "temperature_windows": {
-                    "LiBH4": [305.0, 3.0],
-                    "Mg(BH4)2": [323.0, 3.0],
+                    "LiBH4": [310.0, 3.0],
+                    "Mg(BH4)2": [310.0, 3.0],
                 },
             },
             explanation="Selected DOI-aware DigBat conductivity analysis.",
