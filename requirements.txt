@@ -11,3 +11,5 @@ chainlit>=2.11,<3
 openai>=1.30
 google-genai>=1.0
 pytest>=8.0
+mcp>=1.0
+requests>=2.31
