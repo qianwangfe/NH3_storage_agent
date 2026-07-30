@@ -13,6 +13,9 @@ from .reporting import build_public_report
 from .skills import build_skill_registry
 from .skills.base import SkillContext
 
+import re
+import uuid
+
 _SESSION_HISTORY: dict[str, list[dict[str, Any]]] = defaultdict(list)
 _SESSION_LOCK = Lock()
 _MAX_SESSION_ITEMS = 8
