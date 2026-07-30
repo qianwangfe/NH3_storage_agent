@@ -46,3 +46,23 @@ def test_mechanism_reuses_session_evidence(demo_dir: Path, tmp_path: Path):
     )
     assert result.evidence["previous_evidence_available"] is True
     assert any(Path(path).suffix == ".png" for path in result.files)
+
+def test_mechanism_without_prior_evidence_is_not_supported(
+    demo_dir: Path,
+    tmp_path: Path,
+):
+    result = run_agent(
+        "Compare the mechanism hypotheses",
+        session_id="empty-mechanism-session",
+        raw_dir=demo_dir,
+        out_dir=tmp_path,
+    )
+
+    assert (
+        result.evidence["previous_evidence_available"]
+        is False
+    )
+    assert (
+        result.evidence["working_hypothesis"]["status"]
+        == "preconfigured hypothesis requiring prior evidence"
+    )
