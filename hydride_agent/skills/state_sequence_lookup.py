@@ -39,7 +39,18 @@ def _sequence_summary(rows: pd.DataFrame) -> tuple[str, bool, list[str]]:
             target_states.append("missing")
             caveats.append(f"No record was found near NH3/BH4 = {target_ratio:g}.")
             continue
-        state = str(candidates.iloc[0]["reported_state"])
+         states = sorted(
+            set(candidates["reported_state"].dropna().astype(str))
+        )
+
+        if len(states) == 1:
+            state = states[0]
+        else:
+            state = "condition-dependent"
+            caveats.append(
+                f"Conflicting or condition-dependent state labels were found near "
+                f"NH3/BH4 = {target_ratio:g}: {', '.join(states)}."
+            )
         target_states.append(state)
 
     label_map = {
@@ -50,9 +61,14 @@ def _sequence_summary(rows: pd.DataFrame) -> tuple[str, bool, list[str]]:
         "missing": "missing",
     }
     sequence_label = " → ".join(label_map.get(state, state) for state in target_states)
+
     supported = (
         target_states[0] == "solid"
-        and target_states[1] in {"mixed/transition", "liquid"}
+        and target_states[1] in {
+            "mixed/transition",
+            "liquid",
+            "condition-dependent",
+        }
         and target_states[2] == "solid"
     )
 
