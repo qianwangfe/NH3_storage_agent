@@ -8,11 +8,11 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATABASE_FILES = {
     "nh3_storage": os.environ.get(
         "NH3_STORAGE_FILE",
-        "NH3_storage_data_codex_verified_summary_after_batch_03.xlsx",
+        "NH3_storage_data_records.xlsx",
     ),
     "digbat": os.environ.get(
         "DIGBAT_FILE",
-        "Digbat_V114_Hydride.xlsx",
+        "Digbat_Hydride.xlsx",
     ),
     "dighyd": os.environ.get(
         "DIGHYD_FILE",
@@ -20,6 +20,8 @@ DATABASE_FILES = {
     ),
 }
 
+CONDUCTIVITY_TEMPERATURE_K = 310.0
+CONDUCTIVITY_TEMPERATURE_HALF_WIDTH_K = 3.0
 
 def _contains_required_files(directory: Path) -> bool:
     return all((directory / filename).exists() for filename in DATABASE_FILES.values())
