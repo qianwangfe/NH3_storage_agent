@@ -48,7 +48,7 @@ Trace the reported state sequence of LiBH4·xNH3 from x = 1 to 3. List the compo
 ```
 
 ```text
-Using DigBat, plot ionic conductivity against NH3/BH4 ratio for LiBH4 near 305 ± 3 K and Mg(BH4)2 near 323 ± 3 K. Use one representative value per formula and DOI, aggregate multiple DOI in log10 conductivity space, and export the plotting data.
+Using DigBat, plot ionic conductivity against NH3/BH4 ratio for LiBH4 and Mg(BH4)2 at 310 ± 3 K. Use one representative value per formula and DOI, aggregate multiple DOI in log10 conductivity space, and export the plotting data.
 ```
 
 ```text
