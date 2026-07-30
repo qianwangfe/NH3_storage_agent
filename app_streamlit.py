@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import uuid
 import streamlit as st
 
 from hydride_agent.agent import run_agent
@@ -13,7 +14,7 @@ st.caption(
 )
 
 if "session_id" not in st.session_state:
-    st.session_state.session_id = "streamlit-session"
+    st.session_state.session_id = f"streamlit-{uuid.uuid4().hex}"
 
 question = st.text_area(
     "Question",
