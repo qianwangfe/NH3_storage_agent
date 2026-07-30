@@ -21,7 +21,7 @@ DEFAULT_TEMPERATURE_WINDOWS = {
 
 def _window_for_system(system: str, parameters: dict) -> tuple[float, float]:
     windows = parameters.get("temperature_windows", DEFAULT_TEMPERATURE_WINDOWS)
-    center, half_width = windows.get(system, [305.0, 3.0])
+    center, half_width = windows.get(system, [310.0, 3.0])
     return float(center), float(half_width)
 
 
@@ -64,7 +64,7 @@ def _plot_conductivity_loading(data: pd.DataFrame, figure_path: Path) -> None:
     ax.set_yscale("log")
     ax.set_xlabel("NH₃/BH₄ molar ratio", fontsize=15)
     ax.set_ylabel("Ionic conductivity (S cm⁻¹)", fontsize=15)
-    ax.set_title("DigBat conductivity under system-specific temperature windows", fontsize=15, pad=12)
+    ax.set_title("DigBat conductivity at 310 ± 3 K", fontsize=15, pad=12)
     ax.tick_params(labelsize=12)
     ax.legend(fontsize=10, loc="best")
     ax.grid(True, axis="y", alpha=0.25)
@@ -204,7 +204,7 @@ class ConductivityLoadingSkill:
                 "Exported DOI-level and aggregated plotting tables.",
             ],
             "caveats": [
-                "LiBH4 and Mg(BH4)2 are compared under different temperature windows.",
+                "All host systems were screened using the same 310 ± 3 K temperature window.",
                 "Connecting lines are visual guides within each host system and are not kinetic models.",
             ],
             "plot_code": inspect.getsource(_plot_conductivity_loading),
