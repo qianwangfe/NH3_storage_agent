@@ -66,6 +66,44 @@ def run_agent(
     out_dir.mkdir(parents=True, exist_ok=True)
 
     plan_obj = plan_with_llm(message)
+
+    if not plan_obj.skill:
+        plan = {
+            "databases": [],
+            "skill": None,
+            "parameters": {},
+            "routing": plan_obj.explanation,
+            "session_id": session_id,
+        }
+
+        return AgentResult(
+            answer=(
+                "The request did not match a registered analysis skill. "
+                "Available topics include material-state diversity, "
+                "composition-dependent state sequences, ionic "
+                "conductivity, hydrogen release, mechanism synthesis, "
+                "and computational design."
+            ),
+            files=[],
+            data_preview=[],
+            plan=plan,
+            evidence={
+                "caveats": [
+                    "No deterministic skill was executed."
+                ]
+            },
+        )
+
+    safe_session = re.sub(
+        r"[^A-Za-z0-9_.-]+",
+        "_",
+        session_id or "anonymous",
+    )
+
+    run_id = uuid.uuid4().hex[:12]
+    run_output_dir = out_dir / safe_session / run_id
+    run_output_dir.mkdir(parents=True, exist_ok=True)
+
     registry = build_skill_registry()
     skill = registry.get(plan_obj.skill)
 
@@ -75,7 +113,7 @@ def run_agent(
 
     context = SkillContext(
         raw_dir=raw_dir,
-        output_dir=out_dir,
+        output_dir=run_output_dir,
         user_request=message,
         parameters=parameters,
     )
@@ -97,7 +135,7 @@ def run_agent(
             continue
         files.append(str(path))
 
-    router = DatabaseRouter(raw_dir=raw_dir, output_dir=out_dir)
+    router = DatabaseRouter(raw_dir=raw_dir, output_dir=run_output_dir)
     coverage: dict[str, Any] = {}
     for database in plan_obj.databases:
         try:
