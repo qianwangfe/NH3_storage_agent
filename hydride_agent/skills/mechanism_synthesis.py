@@ -142,27 +142,36 @@ class MechanismSynthesisSkill:
         if not isinstance(previous_evidence, list):
             previous_evidence = []
         facts = _extract_previous_facts(previous_evidence)
-
+        has_evidence = bool(facts)
+        
         comparison = [
             {
                 "candidate": "NH3 stoichiometry alone",
-                "support": "weak",
+                "support": "weak" if has_evidence else "not evaluated",
                 "assessment": (
                     "A re-entrant solid–liquid-like–solid sequence cannot be explained by a monotonic loading descriptor alone."
                 ),
             },
             {
                 "candidate": "cation identity and electrostatics",
-                "support": "partial",
+                "support": "partial" if has_evidence else "not evaluated",
                 "assessment": (
                     "Cation-dependent responses are consistent with different coordination preferences, but cation identity is not itself a microscopic descriptor."
                 ),
             },
             {
                 "candidate": "coordination-shell switching and framework reconstruction",
-                "support": "best working hypothesis",
+                "support": "best working hypothesis" if has_evidence else "not evaluated",,
+
                 "assessment": (
-                    "The hypothesis directly links NH3 uptake to replacement of cation–BH4 contacts, mixed coordination near x ≈ 2, and reconstruction at higher loading."
+                    "The hypothesis directly links NH3 uptake to replacement of "
+                    "cation–BH4 contacts, mixed coordination near x ≈ 2, and "
+                    "reconstruction at higher loading."
+                    if has_evidence
+                    else
+                    "This is a predefined, testable manuscript hypothesis and is "
+                    "not presented as evidence-derived in the absence of prior "
+                    "session evidence."
                 ),
             },
         ]
@@ -173,7 +182,11 @@ class MechanismSynthesisSkill:
                 "Near x ≈ 2, balanced Li–N/Li–B coordination should maximize exchange and configurational disorder; "
                 "at x ≈ 3, Li–N-dominant coordination should support a reconstructed solid-like network."
             ),
-            "status": "testable working hypothesis",
+            "status": (
+                "evidence-supported working hypothesis"
+                if has_evidence
+                else "preconfigured hypothesis requiring prior evidence"
+            ),
             "required_validation": [
                 "Li–N and Li–B coordination fractions",
                 "coordination-mixing entropy",
@@ -190,8 +203,30 @@ class MechanismSynthesisSkill:
             _plot_evidence_map(figure_path)
             files.append(figure_path)
 
+        caveats = [
+            (
+                "Cross-database trends motivate the mechanism but do not "
+                "prove coordination-shell switching."
+            ),
+            (
+                "Microscopic validation requires structure-resolved "
+                "simulation and experimental spectroscopy or scattering "
+                "evidence."
+            ),
+        ]
+
+        if not has_evidence:
+            caveats.insert(
+                0,
+                (
+                    "No prior session evidence was available; the mechanism "
+                    "is shown as a predefined testable hypothesis rather "
+                    "than an evidence-derived conclusion."
+                ),
+            )
+    
         evidence = {
-            "previous_evidence_available": bool(previous_evidence),
+            "previous_evidence_available": has_evidence,
             "evidence_facts": facts,
             "candidate_comparison": comparison,
             "working_hypothesis": hypothesis,
@@ -201,10 +236,7 @@ class MechanismSynthesisSkill:
                 "Compared stoichiometry-only, cation-effect, and coordination-shell explanations.",
                 "Defined the measurements needed to test rather than merely restate the preferred hypothesis.",
             ],
-            "caveats": [
-                "Cross-database trends motivate the mechanism but do not prove coordination-shell switching.",
-                "Microscopic validation requires structure-resolved simulation and experimental spectroscopy or scattering evidence.",
-            ],
+            "caveats": caveats,
             "plot_code": inspect.getsource(_plot_evidence_map),
         }
 
