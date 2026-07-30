@@ -177,6 +177,7 @@ def _mechanism(evidence: dict[str, Any]) -> str:
             "### Competing explanations",
             comparison,
             "### Working hypothesis",
+            f"**Status:** {_text(hypothesis.get('status'))}",
             _text(hypothesis.get("statement")),
             "**Validation targets:** " + "; ".join(hypothesis.get("required_validation", [])),
         ]
