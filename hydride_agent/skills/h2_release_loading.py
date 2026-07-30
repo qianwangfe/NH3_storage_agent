@@ -17,8 +17,8 @@ from .common import choose_column, host_system_base, nh3_per_bh4, pure_parent_or
 def _extract_formula(text: object) -> str | None:
     source = str(text or "").replace("∙", "·")
     patterns = [
-        r"([A-Z][a-z]?(?:\d+(?:\.\d+)?)?\(BH4\)\d+(?:(?:[·-]\d*(?:\.\d+)?NH3)|(?:\(NH3\)\d+))*)",
-        r"([A-Z][a-z]?(?:\d+(?:\.\d+)?)?BH4(?:(?:[·-]\d*(?:\.\d+)?NH3)|(?:\(NH3\)\d+))*)",
+        r"([A-Z][a-z]?(?:\d+(?:\.\d+)?)?\(BH4\)\d+(?:(?:[·-]\d*(?:\.\d+)?NH3)|(?:\(NH3\)(?:\d+(?:\.\d+)?)?))*)",
+        r"([A-Z][a-z]?(?:\d+(?:\.\d+)?)?BH4(?:(?:[·-]\d*(?:\.\d+)?NH3)|(?:\(NH3\)(?:\d+(?:\.\d+)?)?))*)",
     ]
     for pattern in patterns:
         match = re.search(pattern, source)
@@ -27,14 +27,19 @@ def _extract_formula(text: object) -> str | None:
     return None
 
 
-def _extract_wt_percent(text: object) -> float | None:
+def _extract_wt_percent(value: object) -> float | None:
+    if isinstance(value, (int, float)) and pd.notna(value):
+        return float(value)
+
+    text = str(value or "").strip()
+    text = re.sub(r"(?<=\d),(?=\d)", ".", text)
+
     match = re.search(
-        r"(\d+(?:\.\d+)?)\s*(?:wt\.?\s*%|mass\s*%|wt%)",
-        str(text or ""),
+        r"([-+]?\d+(?:\.\d+)?)\s*(?:wt\.?\s*%|mass\s*%|wt%)?",
+        text,
         flags=re.I,
     )
     return float(match.group(1)) if match else None
-
 
 def _plot_h2_release_loading(data: pd.DataFrame, figure_path: Path) -> None:
     fig, ax = plt.subplots(figsize=(10.5, 6.6))
