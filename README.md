@@ -1,4 +1,7 @@
-Hydride NH3 Agent is also designed as an **agentic-ready package**: the same registered skills can be accessed through a command-line interface, web interfaces, an HTTP API, and MCP-compatible agent clients such as Codex or Claude Desktop.
+# NH3 Storage Agent
+
+NH3 Storage Agent is a skill-routed, tool-augmented scientific assistant for traceable analysis of ammonia-containing hydrides across NH3 Storage, DigBat, and DigHyd datasets.
+This agent is also designed as an **agentic-ready package**: the same registered skills can be accessed through a command-line interface, web interfaces, an HTTP API, and MCP-compatible agent clients such as Codex or Claude Desktop.
 
 ## Scientific workflow
 
