@@ -8,7 +8,7 @@ from mcp.server.fastmcp import FastMCP
 
 
 MCP_AGENT_GUIDANCE = """
-MCP tools for the Hydride NH3 Complete Private agent.
+MCP tools for the Hydride NH3 agent.
 
 This version targets the v0.2 skill-based FastAPI backend:
 - GET  /databases
@@ -88,9 +88,11 @@ def _request_json(
 
 @mcp.tool()
 def list_databases() -> dict:
-    """List databases known to the Hydride NH3 agent."""
-    return {"success": True, "databases": _request_json("GET", "/databases", timeout=30)}
-
+    result = _request_json("GET", "/databases", timeout=30)
+    if isinstance(result, dict) and result.get("success") is False:
+        return result
+    return {"success": True, "databases": result}
+    
 
 @mcp.tool()
 def list_skills() -> dict:
