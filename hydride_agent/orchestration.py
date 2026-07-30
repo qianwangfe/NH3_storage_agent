@@ -159,19 +159,41 @@ def deterministic_plan(request: str) -> AgentPlan:
             explanation="Selected NH3-storage family-level state statistics.",
         )
 
+
+    state_tokens = [
+        "state sequence",
+        "solid-liquid",
+        "solid–liquid",
+        "physical state",
+        "phase sequence",
+        "liquefy",
+        "liquid-like",
+        "resolidify",
+    ]
+
+    if any(token in query for token in state_tokens):
+        return AgentPlan(
+            databases=["nh3_storage"],
+            skill="state_sequence_lookup",
+            parameters={
+                "target_system": _target_system(query),
+                "min_ratio": 0.5,
+                "max_ratio": 3.5,
+                "show_figure": False,
+                "show_table": True,
+                "show_plot_code": False,
+                "show_data_files": True,
+            },
+            explanation=(
+                "Selected a composition-dependent state-sequence lookup."
+            ),
+        )
+
     return AgentPlan(
-        databases=["nh3_storage"],
-        skill="state_sequence_lookup",
-        parameters={
-            "target_system": _target_system(query),
-            "min_ratio": 0.5,
-            "max_ratio": 3.5,
-            "show_figure": False,
-            "show_table": True,
-            "show_plot_code": False,
-            "show_data_files": True,
-        },
-        explanation="Selected a composition-dependent state-sequence lookup.",
+        databases=[],
+        skill=None,
+        parameters={},
+        explanation="No registered skill matched the request.",
     )
 
 
@@ -186,6 +208,9 @@ def plan_with_llm(request: str) -> AgentPlan:
         return deterministic_plan(request)
 
     fallback = deterministic_plan(request)
+    if fallback.skill is None:
+        return fallback
+    
     try:
         from openai import OpenAI
 
