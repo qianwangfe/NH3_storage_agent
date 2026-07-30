@@ -18,3 +18,10 @@ def test_representative_routes():
 def test_conductivity_and_h2_have_independent_routes():
     assert deterministic_plan("DigBat conductivity plot").databases == ["digbat"]
     assert deterministic_plan("DigHyd H2 release plot").databases == ["dighyd"]
+
+def test_unknown_request_returns_no_skill():
+    plan = deterministic_plan(
+        "What is the weather tomorrow?"
+    )
+    assert plan.skill is None
+    assert plan.databases == []
