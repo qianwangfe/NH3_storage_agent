@@ -39,7 +39,7 @@ def _sequence_summary(rows: pd.DataFrame) -> tuple[str, bool, list[str]]:
             target_states.append("missing")
             caveats.append(f"No record was found near NH3/BH4 = {target_ratio:g}.")
             continue
-         states = sorted(
+            states = sorted(
             set(candidates["reported_state"].dropna().astype(str))
         )
 
