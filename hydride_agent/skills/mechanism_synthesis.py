@@ -161,7 +161,7 @@ class MechanismSynthesisSkill:
             },
             {
                 "candidate": "coordination-shell switching and framework reconstruction",
-                "support": "best working hypothesis" if has_evidence else "not evaluated",,
+                "support": "best working hypothesis" if has_evidence else "not evaluated",
 
                 "assessment": (
                     "The hypothesis directly links NH3 uptake to replacement of "
